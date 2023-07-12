@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  CognitoDomainName:
+    Type: String
+  CDNDomainName:
+    Type: String
+  HostedZoneId:
+    Type: String
+
+Resources:
+  CognitoCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref CognitoDomainName
+      DomainValidationOptions:
+        - DomainName: !Ref CognitoDomainName
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+  CDNCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref CDNDomainName
+      DomainValidationOptions:
+        - DomainName: !Ref CDNDomainName
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
+
+Outputs:
+  CognitoCertificate:
+    Description: ARN of the Cognito Certificate
+    Value: !Ref CognitoCertificate
+  CDNCertificate:
+    Description: ARN of the CDN Certificate
+    Value: !Ref CDNCertificate

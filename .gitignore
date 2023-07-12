@@ -1,0 +1,6 @@
+*__pycache__*
+*_gitignore_*
+Pipfile.lock
+*.zip
+dependencies
+.DS_Store
