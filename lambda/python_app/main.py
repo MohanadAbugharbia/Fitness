@@ -8,7 +8,8 @@ from flask import (
     session,
     redirect,
     url_for,
-    render_template
+    render_template,
+    wrappers as flask_wrappers,
 )
 import datetime
 import awsgi
@@ -38,7 +39,7 @@ def get_cognito_token(code: str, redirect_uri: str) -> requests.Response:
     response: requests.Response = requests.post(url=url, params=params, headers=headers)
     return response
 
-def get_cognito_user(accesstoken: str) -> dict:
+def get_cognito_user_info(accesstoken: str) -> dict | flask_wrappers.Response:
 
     client = boto3.client('cognito-idp')
     try:
@@ -76,20 +77,26 @@ def get_cognito_user(accesstoken: str) -> dict:
 def post_weight():
     if not 'access_token' in session:
         return redirect(url_for('login'))
-    else:
-        user_info: dict = get_cognito_user(session['access_token'])
-        user: str = user_info.get('username')
-        return render_template("post_weight.html", user=user)
+
+    resp: dict | flask_wrappers.Response = get_cognito_user_info(session['access_token'])
+    if isinstance(resp, flask_wrappers.Response):
+        return resp
+    user_info: dict = resp
+    user: str = user_info.get('username')
+    return render_template("post_weight.html", user=user)
 
 
 @app.route('/getweights')
 def get_weights():
     if not 'access_token' in session:
         return redirect(url_for('login'))
-    else:
-        user_info: dict = get_cognito_user(session['access_token'])
-        user: str = user_info.get('username')
-        return render_template("get_weights.html", user=user)
+
+    resp: dict | flask_wrappers.Response = get_cognito_user_info(session['access_token'])
+    if isinstance(resp, flask_wrappers.Response):
+        return resp
+    user_info: dict = resp
+    user: str = user_info.get('username')
+    return render_template("get_weights.html", user=user)
 
 @app.route('/login')
 def login():
@@ -126,10 +133,13 @@ def login():
 def home():
     if not 'access_token' in session:
         return redirect(url_for('login'))
-    else:
-        user_info: dict = get_cognito_user(session['access_token'])
-        user: str = user_info.get('username')
-        return render_template("home.html", user=user)
+
+    resp: dict | flask_wrappers.Response = get_cognito_user_info(session['access_token'])
+    if isinstance(resp, flask_wrappers.Response):
+        return resp
+    user_info: dict = resp
+    user: str = user_info.get('username')
+    return render_template("home.html", user=user)
 
 @app.route('/')
 def index():
@@ -155,7 +165,7 @@ if __name__=="__main__":
         def __init__(self) -> None:
             pass
 
-    with open("test_data2.json", "r") as f:
+    with open("test_gitignore_data2.json", "r") as f:
         TEST_DATA = json.load(f)
     # handler_response: dict = handler(TEST_DATA, FakeLambdaContext())
     # print(json.dumps(handler_response, indent=4))
