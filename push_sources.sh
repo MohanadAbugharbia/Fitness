@@ -8,7 +8,7 @@ ROOT_BUCKET=$(aws cloudformation describe-stack-resources --stack-name Fitness-A
 
 cd lambda/dependencies
 mkdir python
-python3.9 -m pip install -r $WORKDIR/requirements.txt -t ./python
+python3.10 -m pip install -r $WORKDIR/requirements.txt -t ./python
 zip -r python_dependencies.zip ./python
 aws s3 cp python_dependencies.zip s3://$SOURCE_BUCKET/dependencies/python_dependencies.zip
 rm -r python_dependencies.zip python/
