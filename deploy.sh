@@ -28,20 +28,21 @@ PARAMETERS="Environment=$STAGE CognitoDomainName=$COGNITO_DOMAIN_NAME AppDomainN
 TAGS="Environment=$STAGE"
 
 {
-    STACK_NAME="Fitness-App-Source-Bucket"
+    STACK_NAME="Fitness-App-Source-Bucket-${STAGE}"
     TEMPLATE_FILE="${WORKDIR}/infra/src_bucket.yml"
     CAPABILITIES="CAPABILITY_IAM CAPABILITY_NAMED_IAM"
 
     aws cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE --capabilities $(echo $CAPABILITIES) --parameter-override $(echo $PARAMETERS) --tags $(echo $TAGS)
+    # $WORKDIR/push_sources.sh
 } && {
-    STACK_NAME="us-east-1-certificates"
+    STACK_NAME="Fitness-App-us-east-1-certificates-${STAGE}"
     TEMPLATE_FILE="${WORKDIR}/infra/us-east-1-certificates.yml"
 
     aws --region us-east-1 cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE --parameter-override $(echo $PARAMETERS) --tags $(echo $TAGS)
     COGNITO_CERTIFICATE_ARN=$(aws --region us-east-1 cloudformation describe-stack-resource --stack-name $STACK_NAME --logical-resource-id CognitoCertificate | jq ".StackResourceDetail.PhysicalResourceId" | sed -r 's/"//g')
     CDN_CERTIFICATE_ARN=$(aws --region us-east-1 cloudformation describe-stack-resource --stack-name $STACK_NAME --logical-resource-id CDNCertificate | jq ".StackResourceDetail.PhysicalResourceId" | sed -r 's/"//g')
 }&& {
-    STACK_NAME="Fitness-App"
+    STACK_NAME="Fitness-App-${STAGE}"
     TEMPLATE_FILE="${WORKDIR}/infra/main.yml"
     PARAMETERS="$PARAMETERS CDNCertificateArn=$CDN_CERTIFICATE_ARN CognitoCertificateArn=$COGNITO_CERTIFICATE_ARN"
     CAPABILITIES='CAPABILITY_IAM CAPABILITY_NAMED_IAM'

@@ -1,8 +1,10 @@
 
 WORKDIR=$PWD
 
-SOURCE_BUCKET=$(aws cloudformation describe-stack-resources --stack-name Fitness-App-Source-Bucket | jq ".StackResources[].PhysicalResourceId" | sed -r 's/"//g' |grep source)
-ROOT_BUCKET=$(aws cloudformation describe-stack-resources --stack-name Fitness-App-Source-Bucket | jq ".StackResources[].PhysicalResourceId" | sed -r 's/"//g' |grep root)
+STAGE=${STAGE:-"prod"}
+
+SOURCE_BUCKET=$(aws cloudformation describe-stack-resources --stack-name Fitness-App-Source-Bucket-${STAGE} | jq ".StackResources[].PhysicalResourceId" | sed -r 's/"//g' |grep source)
+ROOT_BUCKET=$(aws cloudformation describe-stack-resources --stack-name Fitness-App-Source-Bucket-${STAGE} | jq ".StackResources[].PhysicalResourceId" | sed -r 's/"//g' |grep root)
 
 cd lambda/dependencies
 mkdir python

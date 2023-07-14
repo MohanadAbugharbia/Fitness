@@ -10,7 +10,7 @@ Metadata: {}
 #       - prod
 #     Description: |
 #       Placeholder
-  
+
 Conditions: {}
 Outputs:
   S3SourceCodeBucket:
@@ -58,9 +58,9 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
       LifecycleConfiguration:
-        Rules: 
+        Rules:
           - Id: OnlyKeep5Versions
-            NoncurrentVersionExpiration: 
+            NoncurrentVersionExpiration:
               NewerNoncurrentVersions: 5
               NoncurrentDays: 1
             # Prefix: /functions
@@ -70,12 +70,11 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: fitness-app-logs-bucket
-      AccessControl: LogDeliveryWrite
+      # AccessControl: LogDeliveryWrite
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
-
 
   S3BucketRoot:
     Type: AWS::S3::Bucket
@@ -87,8 +86,8 @@ Resources:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
       LoggingConfiguration:
-        DestinationBucketName: !Ref 'S3BucketLogs'
-        LogFilePrefix: 'origin/'
+        DestinationBucketName: !Ref "S3BucketLogs"
+        LogFilePrefix: "origin/"
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true

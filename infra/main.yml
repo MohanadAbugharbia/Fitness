@@ -43,13 +43,13 @@ Conditions: {}
 Resources:
   LambdaDependenciesLayer:
     Type: AWS::Lambda::LayerVersion
-    Properties: 
-      CompatibleArchitectures: 
+    Properties:
+      CompatibleArchitectures:
         - x86_64
         - arm64
       CompatibleRuntimes:
-        - python3.9
-      Content: 
+        - python3.10
+      Content:
         S3Bucket: !ImportValue S3SourceCodeBucket
         S3Key: dependencies/python_dependencies.zip
       Description: Fitness app lambda functions dependencies
@@ -66,7 +66,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -80,7 +80,7 @@ Resources:
     Properties:
       PolicyName: CloudWatchInsightQueryPolicy
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -88,7 +88,7 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource: !GetAtt IndexLogGroup.Arn
-      Roles: 
+      Roles:
         - !Ref IndexRole
 
   IndexFunction:
@@ -98,18 +98,18 @@ Resources:
         S3Bucket: !ImportValue S3SourceCodeBucket
         S3Key: functions/python_app.zip
       Environment:
-          Variables: 
-            ENVIRONMENT: !Ref Environment
-            COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
-            FITNESS_APP_ENDPOINT: !Ref AppDomainName
-            FLASK_SECRET_KEY: !Ref FlaskSecretKey
-            COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
-            COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
-            POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
+          FITNESS_APP_ENDPOINT: !Ref AppDomainName
+          FLASK_SECRET_KEY: !Ref FlaskSecretKey
+          COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
+          COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
+          POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
       FunctionName: FitnessAppIndex
       PackageType: Zip
       Handler: main.handler
-      Runtime: python3.9
+      Runtime: python3.10
       Role: !GetAtt IndexRole.Arn
       Timeout: 10
       MemorySize: 128
@@ -128,7 +128,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -143,7 +143,7 @@ Resources:
     Properties:
       PolicyName: CloudWatchInsightQueryPolicy
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -151,7 +151,7 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource: !GetAtt HomeLogGroup.Arn
-      Roles: 
+      Roles:
         - !Ref HomeRole
 
   HomeFunction:
@@ -161,18 +161,18 @@ Resources:
         S3Bucket: !ImportValue S3SourceCodeBucket
         S3Key: functions/python_app.zip
       Environment:
-          Variables: 
-            ENVIRONMENT: !Ref Environment
-            COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
-            FITNESS_APP_ENDPOINT: !Ref AppDomainName
-            FLASK_SECRET_KEY: !Ref FlaskSecretKey
-            COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
-            COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
-            POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
+          FITNESS_APP_ENDPOINT: !Ref AppDomainName
+          FLASK_SECRET_KEY: !Ref FlaskSecretKey
+          COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
+          COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
+          POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
       FunctionName: FitnessAppHome
       PackageType: Zip
       Handler: main.handler
-      Runtime: python3.9
+      Runtime: python3.10
       Role: !GetAtt HomeRole.Arn
       Timeout: 10
       MemorySize: 128
@@ -191,7 +191,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -205,7 +205,7 @@ Resources:
     Properties:
       PolicyName: CloudWatchInsightQueryPolicy
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -213,7 +213,7 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource: !GetAtt LoginLogGroup.Arn
-      Roles: 
+      Roles:
         - !Ref LoginRole
 
   LoginFunction:
@@ -223,18 +223,18 @@ Resources:
         S3Bucket: !ImportValue S3SourceCodeBucket
         S3Key: functions/python_app.zip
       Environment:
-          Variables: 
-            ENVIRONMENT: !Ref Environment
-            COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
-            FITNESS_APP_ENDPOINT: !Ref AppDomainName
-            FLASK_SECRET_KEY: !Ref FlaskSecretKey
-            COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
-            COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
-            POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
+          FITNESS_APP_ENDPOINT: !Ref AppDomainName
+          FLASK_SECRET_KEY: !Ref FlaskSecretKey
+          COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
+          COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
+          POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
       FunctionName: FitnessAppLogin
       PackageType: Zip
       Handler: main.handler
-      Runtime: python3.9
+      Runtime: python3.10
       Role: !GetAtt LoginRole.Arn
       Timeout: 10
       MemorySize: 128
@@ -253,7 +253,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -268,7 +268,7 @@ Resources:
     Properties:
       PolicyName: CloudWatchInsightQueryPolicy
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -276,7 +276,7 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource: !GetAtt PostWeightLogGroup.Arn
-      Roles: 
+      Roles:
         - !Ref PostWeightRole
 
   PostWeightFunction:
@@ -284,20 +284,20 @@ Resources:
     Properties:
       Code:
         S3Bucket: !ImportValue S3SourceCodeBucket
-        S3Key: functions/post_weight.zip
+        S3Key: functions/python_app.zip
       Environment:
-          Variables: 
-            ENVIRONMENT: !Ref Environment
-            COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
-            FITNESS_APP_ENDPOINT: !Ref AppDomainName
-            FLASK_SECRET_KEY: !Ref FlaskSecretKey
-            COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
-            COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
-            POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
+          FITNESS_APP_ENDPOINT: !Ref AppDomainName
+          FLASK_SECRET_KEY: !Ref FlaskSecretKey
+          COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
+          COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
+          POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
       FunctionName: FitnessAppPostWeight
       PackageType: Zip
       Handler: main.handler
-      Runtime: python3.9
+      Runtime: python3.10
       Role: !GetAtt PostWeightRole.Arn
       Timeout: 10
       MemorySize: 128
@@ -316,7 +316,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -330,7 +330,7 @@ Resources:
     Properties:
       PolicyName: CloudWatchInsightQueryPolicy
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -338,7 +338,7 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource: !GetAtt GetWeightsLogGroup.Arn
-      Roles: 
+      Roles:
         - !Ref GetWeightsRole
 
   GetWeightsFunction:
@@ -348,18 +348,18 @@ Resources:
         S3Bucket: !ImportValue S3SourceCodeBucket
         S3Key: functions/python_app.zip
       Environment:
-          Variables: 
-            ENVIRONMENT: !Ref Environment
-            COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
-            FITNESS_APP_ENDPOINT: !Ref AppDomainName
-            FLASK_SECRET_KEY: !Ref FlaskSecretKey
-            COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
-            COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
-            POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          COGNITO_LOGIN_ENDPOINT: !Ref CognitoDomainName
+          FITNESS_APP_ENDPOINT: !Ref AppDomainName
+          FLASK_SECRET_KEY: !Ref FlaskSecretKey
+          COGNITO_USER_POOL: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${FitnessAppCognitoUserPool}"
+          COGNITO_USER_POOL_CLIENT_ID: !Ref FitnessAppCognitoUserPoolClient
+          POWERTOOLS_LOGGER_LOG_EVENT: "TRUE"
       FunctionName: FitnessAppGetWeights
       PackageType: Zip
       Handler: main.handler
-      Runtime: python3.9
+      Runtime: python3.10
       Role: !GetAtt GetWeightsRole.Arn
       Timeout: 10
       MemorySize: 128
@@ -376,32 +376,32 @@ Resources:
 
   FitnessAppApi:
     Type: AWS::ApiGateway::RestApi
-    Properties: 
+    Properties:
       # ApiKeySourceType: String
-      BinaryMediaTypes: 
+      BinaryMediaTypes:
         - UTF-8
       # Description: String
       DisableExecuteApiEndpoint: true
-      EndpointConfiguration: 
+      EndpointConfiguration:
         Types:
           - REGIONAL
       FailOnWarnings: true
       # MinimumCompressionSize: Integer
       Name: FitnessAppApi
-      # Parameters: 
+      # Parameters:
       #   Key : Value
       # Policy: Json
 
-### index function ###
+  ### index function ###
 
   IndexFunctionPermission:
     Type: AWS::Lambda::Permission
-    Properties: 
+    Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       FunctionName: !Ref IndexFunction
       SourceAccount: !Ref AWS::AccountId
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/*'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/*"
 
   FitnessAppApiIndexMethod:
     DependsOn:
@@ -411,42 +411,42 @@ Resources:
       AuthorizationType: NONE
       HttpMethod: GET
       Integration:
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          IntegrationResponses:
-            - StatusCode: "200"
-              ResponseParameters:
-                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
-                  method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
-                  method.response.header.Access-Control-Allow-Origin: "'*'"
-          Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${IndexFunction.Arn}/invocations"
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${IndexFunction.Arn}/invocations"
       MethodResponses:
         - StatusCode: "200"
           ResponseParameters:
             method.response.header.Access-Control-Allow-Headers: true
             method.response.header.Access-Control-Allow-Methods: true
-            method.response.header.Access-Control-Allow-Origin: true 
+            method.response.header.Access-Control-Allow-Origin: true
       OperationName: Index
       ResourceId: !GetAtt FitnessAppApi.RootResourceId
       RestApiId: !Ref FitnessAppApi
- 
-### home fucntion ###
+
+  ### home fucntion ###
 
   FitnessAppApiHomeResource:
     Type: AWS::ApiGateway::Resource
-    Properties: 
+    Properties:
       ParentId: !GetAtt FitnessAppApi.RootResourceId
       PathPart: home
       RestApiId: !Ref FitnessAppApi
 
   HomeFunctionPermission:
     Type: AWS::Lambda::Permission
-    Properties: 
+    Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       FunctionName: !Ref HomeFunction
       SourceAccount: !Ref AWS::AccountId
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/home'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/home"
 
   FitnessAppApiHomeMethod:
     DependsOn:
@@ -456,42 +456,42 @@ Resources:
       AuthorizationType: NONE
       HttpMethod: GET
       Integration:
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          IntegrationResponses:
-            - StatusCode: "200"
-              ResponseParameters:
-                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
-                  method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
-                  method.response.header.Access-Control-Allow-Origin: "'*'"
-          Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HomeFunction.Arn}/invocations"
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HomeFunction.Arn}/invocations"
       MethodResponses:
         - StatusCode: "200"
           ResponseParameters:
             method.response.header.Access-Control-Allow-Headers: true
             method.response.header.Access-Control-Allow-Methods: true
-            method.response.header.Access-Control-Allow-Origin: true 
+            method.response.header.Access-Control-Allow-Origin: true
       OperationName: Home
       ResourceId: !Ref FitnessAppApiHomeResource
       RestApiId: !Ref FitnessAppApi
 
-### login Function ###
+  ### login Function ###
 
   FitnessAppApiLoginResource:
     Type: AWS::ApiGateway::Resource
-    Properties: 
+    Properties:
       ParentId: !GetAtt FitnessAppApi.RootResourceId
       PathPart: login
       RestApiId: !Ref FitnessAppApi
 
   LoginFunctionPermission:
     Type: AWS::Lambda::Permission
-    Properties: 
+    Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       FunctionName: !Ref LoginFunction
       SourceAccount: !Ref AWS::AccountId
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/login'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/login"
 
   FitnessAppApiLoginMethod:
     DependsOn:
@@ -501,42 +501,42 @@ Resources:
       AuthorizationType: NONE
       HttpMethod: GET
       Integration:
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          IntegrationResponses:
-            - StatusCode: "200"
-              ResponseParameters:
-                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
-                  method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
-                  method.response.header.Access-Control-Allow-Origin: "'*'"
-          Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LoginFunction.Arn}/invocations"
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LoginFunction.Arn}/invocations"
       MethodResponses:
         - StatusCode: "200"
           ResponseParameters:
             method.response.header.Access-Control-Allow-Headers: true
             method.response.header.Access-Control-Allow-Methods: true
-            method.response.header.Access-Control-Allow-Origin: true 
+            method.response.header.Access-Control-Allow-Origin: true
       OperationName: login
       ResourceId: !Ref FitnessAppApiLoginResource
       RestApiId: !Ref FitnessAppApi
 
-### getWeights Function ###
+  ### getWeights Function ###
 
   FitnessAppApiGetWeightsResource:
     Type: AWS::ApiGateway::Resource
-    Properties: 
+    Properties:
       ParentId: !GetAtt FitnessAppApi.RootResourceId
       PathPart: getweights
       RestApiId: !Ref FitnessAppApi
 
   GetWeightsFunctionPermission:
     Type: AWS::Lambda::Permission
-    Properties: 
+    Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       FunctionName: !Ref GetWeightsFunction
       SourceAccount: !Ref AWS::AccountId
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/getweights'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/getweights"
 
   FitnessAppApiGetWeightsMethod:
     DependsOn:
@@ -546,42 +546,42 @@ Resources:
       AuthorizationType: NONE
       HttpMethod: GET
       Integration:
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          IntegrationResponses:
-            - StatusCode: "200"
-              ResponseParameters:
-                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
-                  method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
-                  method.response.header.Access-Control-Allow-Origin: "'*'"
-          Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetWeightsFunction.Arn}/invocations"
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetWeightsFunction.Arn}/invocations"
       MethodResponses:
         - StatusCode: "200"
           ResponseParameters:
             method.response.header.Access-Control-Allow-Headers: true
             method.response.header.Access-Control-Allow-Methods: true
-            method.response.header.Access-Control-Allow-Origin: true 
+            method.response.header.Access-Control-Allow-Origin: true
       OperationName: Get Weights
       ResourceId: !Ref FitnessAppApiGetWeightsResource
       RestApiId: !Ref FitnessAppApi
 
-### PostWeight Function ###
+  ### PostWeight Function ###
 
   FitnessAppApiPostWeightResource:
     Type: AWS::ApiGateway::Resource
-    Properties: 
+    Properties:
       ParentId: !GetAtt FitnessAppApi.RootResourceId
       PathPart: postweight
       RestApiId: !Ref FitnessAppApi
 
   PostWeightFunctionPermission:
     Type: AWS::Lambda::Permission
-    Properties: 
+    Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       FunctionName: !Ref PostWeightFunction
       SourceAccount: !Ref AWS::AccountId
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/postweight'
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${FitnessAppApi}/*/GET/postweight"
 
   FitnessAppApiPostWeightPostMethod:
     DependsOn:
@@ -590,10 +590,10 @@ Resources:
     Properties:
       AuthorizationType: NONE
       HttpMethod: POST
-      Integration: 
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PostWeightFunction.Arn}/invocations"
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PostWeightFunction.Arn}/invocations"
       OperationName: post Weight
       ResourceId: !Ref FitnessAppApiPostWeightResource
       RestApiId: !Ref FitnessAppApi
@@ -605,26 +605,26 @@ Resources:
     Properties:
       AuthorizationType: NONE
       HttpMethod: GET
-      Integration: 
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PostWeightFunction.Arn}/invocations"
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PostWeightFunction.Arn}/invocations"
       OperationName: post Weight
       ResourceId: !Ref FitnessAppApiPostWeightResource
       RestApiId: !Ref FitnessAppApi
 
-### Static ANY Method ###
+  ### Static ANY Method ###
 
   FitnessAppApiStaticResource:
     Type: AWS::ApiGateway::Resource
-    Properties: 
+    Properties:
       ParentId: !GetAtt FitnessAppApi.RootResourceId
       PathPart: "static"
       RestApiId: !Ref FitnessAppApi
 
   FitnessAppApiStaticProxyResource:
     Type: AWS::ApiGateway::Resource
-    Properties: 
+    Properties:
       ParentId: !GetAtt FitnessAppApiStaticResource.ResourceId
       PathPart: "{proxy+}"
       RestApiId: !Ref FitnessAppApi
@@ -640,15 +640,15 @@ Resources:
         method.request.path.proxy: true
       Integration:
         CacheKeyParameters:
-          - 'method.request.path.proxy'
+          - "method.request.path.proxy"
         RequestParameters:
-          integration.request.path.proxy: 'method.request.path.proxy'
+          integration.request.path.proxy: "method.request.path.proxy"
         IntegrationHttpMethod: ANY
         Type: HTTP_PROXY
         Uri: !Sub https://${CDNDomainName}/static/{proxy}
         PassthroughBehavior: WHEN_NO_MATCH
         IntegrationResponses:
-          - StatusCode: '200'
+          - StatusCode: "200"
 
   FitnessAppApiStageDeployment:
     DependsOn:
@@ -660,21 +660,21 @@ Resources:
       - FitnessAppApiHomeMethod
       - FitnessAppApiIndexMethod
     Type: AWS::ApiGateway::Deployment
-    Properties: 
+    Properties:
       Description: !Sub "Fitness App ${Environment} Deployment"
       RestApiId: !Ref FitnessAppApi
 
   FitnessAppApiStage:
     Type: AWS::ApiGateway::Stage
-    Properties: 
-      AccessLogSetting: 
+    Properties:
+      AccessLogSetting:
         DestinationArn: !GetAtt FitnessAppApiStageLogGroup.Arn
         Format: '{ "requestId":"$context.requestId", "ip": "$context.identity.sourceIp", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod","routeKey":"$context.routeKey", "status":"$context.status","protocol":"$context.protocol", "responseLength":"$context.responseLength" }'
       # CacheClusterEnabled: true
       # CacheClusterSize: "0.5"
       DeploymentId: !Ref FitnessAppApiStageDeployment
       Description: !Sub "Fitness App stage ${Environment}"
-      MethodSettings: 
+      MethodSettings:
         - HttpMethod: GET
           #  CacheDataEncrypted: true
           #   CacheTtlInSeconds: 10
@@ -697,26 +697,26 @@ Resources:
 
   FitnessAppApiSSLCertificate:
     Type: AWS::CertificateManager::Certificate
-    Properties: 
+    Properties:
       DomainName: !Ref AppDomainName
-      DomainValidationOptions: 
+      DomainValidationOptions:
         - DomainName: !Ref AppDomainName
           HostedZoneId: !Ref HostedZoneId
       ValidationMethod: DNS
 
   FitnessAppApiDomainName:
     Type: AWS::ApiGateway::DomainName
-    Properties: 
+    Properties:
       RegionalCertificateArn: !Ref FitnessAppApiSSLCertificate
       DomainName: !Ref AppDomainName
-      EndpointConfiguration: 
+      EndpointConfiguration:
         Types:
           - REGIONAL
       SecurityPolicy: TLS_1_2
 
   FitnessAppApiMapping:
     Type: AWS::ApiGateway::BasePathMapping
-    Properties: 
+    Properties:
       DomainName: !Ref FitnessAppApiDomainName
       RestApiId: !Ref FitnessAppApi
       Stage: !Ref FitnessAppApiStage
@@ -727,54 +727,54 @@ Resources:
       HostedZoneName: abugharbia.com.
       RecordSets:
         - Name: !Ref AppDomainName
-          Type: 'A'
+          Type: "A"
           AliasTarget:
             DNSName: !GetAtt FitnessAppApiDomainName.RegionalDomainName
             EvaluateTargetHealth: true
             HostedZoneId: !GetAtt FitnessAppApiDomainName.RegionalHostedZoneId
-### Cognito User Pool ###
+  ### Cognito User Pool ###
 
   FitnessAppCognitoUserPool:
     Type: AWS::Cognito::UserPool
-    Properties: 
-      AccountRecoverySetting: 
-        RecoveryMechanisms: 
+    Properties:
+      AccountRecoverySetting:
+        RecoveryMechanisms:
           - Name: verified_email
             Priority: 1
           - Name: verified_phone_number
             Priority: 2
-      AdminCreateUserConfig: 
+      AdminCreateUserConfig:
         AllowAdminCreateUserOnly: false
-      # AliasAttributes: 
+      # AliasAttributes:
       #   - String
-      AutoVerifiedAttributes: 
+      AutoVerifiedAttributes:
         - email
-      DeviceConfiguration: 
+      DeviceConfiguration:
         ChallengeRequiredOnNewDevice: true
         DeviceOnlyRememberedOnUserPrompt: true
-      EmailConfiguration: 
+      EmailConfiguration:
         EmailSendingAccount: DEVELOPER
         From: Mohanad Abugharbia <mgharbieh.01@gmail.com>
         ReplyToEmailAddress: mgharbieh.01@gmail.com
         SourceArn: !Sub arn:aws:ses:${AWS::Region}:${AWS::AccountId}:identity/mgharbieh.01@gmail.com
-      EnabledMfas: 
+      EnabledMfas:
         - SOFTWARE_TOKEN_MFA
       MfaConfiguration: OPTIONAL
-      Policies: 
-        PasswordPolicy: 
+      Policies:
+        PasswordPolicy:
           MinimumLength: 8
           RequireLowercase: true
           RequireNumbers: true
           RequireSymbols: true
           RequireUppercase: true
           TemporaryPasswordValidityDays: 1
-      Schema: 
+      Schema:
         - AttributeDataType: String
           DeveloperOnlyAttribute: false
           Mutable: true
           Name: given_name
           Required: true
-          StringAttributeConstraints: 
+          StringAttributeConstraints:
             MaxLength: "255"
             MinLength: "1"
         - AttributeDataType: String
@@ -782,7 +782,7 @@ Resources:
           Mutable: true
           Name: family_name
           Required: true
-          StringAttributeConstraints: 
+          StringAttributeConstraints:
             MaxLength: "255"
             MinLength: "1"
         - AttributeDataType: String
@@ -790,25 +790,25 @@ Resources:
           Mutable: true
           Name: email
           Required: true
-          StringAttributeConstraints: 
+          StringAttributeConstraints:
             MaxLength: "255"
             MinLength: "1"
-      UserAttributeUpdateSettings: 
-        AttributesRequireVerificationBeforeUpdate: 
+      UserAttributeUpdateSettings:
+        AttributesRequireVerificationBeforeUpdate:
           - email
-      UsernameAttributes: 
+      UsernameAttributes:
         - email
-      UsernameConfiguration: 
+      UsernameConfiguration:
         CaseSensitive: false
-      UserPoolAddOns: 
-          AdvancedSecurityMode: AUDIT
+      UserPoolAddOns:
+        AdvancedSecurityMode: AUDIT
       UserPoolName: Fitness App Users
 
   FitnessAppCognitoUserPoolDomain:
     DependsOn:
       - Route53RecordSetGroup
     Type: AWS::Cognito::UserPoolDomain
-    Properties: 
+    Properties:
       CustomDomainConfig:
         CertificateArn: !Ref CognitoCertificateArn
       Domain: !Ref CognitoDomainName
@@ -819,27 +819,27 @@ Resources:
     Properties:
       HostedZoneName: abugharbia.com.
       RecordSets:
-      - Name: !Ref CognitoDomainName
-        Type: 'A'
-        AliasTarget:
-          DNSName: !GetAtt FitnessAppCognitoUserPoolDomain.CloudFrontDistribution
-          EvaluateTargetHealth: true
-          # The  following HosteZoneId is always used for alias records pointing to CF.
-          HostedZoneId: 'Z2FDTNDATAQYW2'
+        - Name: !Ref CognitoDomainName
+          Type: "A"
+          AliasTarget:
+            DNSName: !GetAtt FitnessAppCognitoUserPoolDomain.CloudFrontDistribution
+            EvaluateTargetHealth: true
+            # The  following HosteZoneId is always used for alias records pointing to CF.
+            HostedZoneId: "Z2FDTNDATAQYW2"
 
   FitnessAppCognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
-    Properties: 
-      AllowedOAuthFlows: 
+    Properties:
+      AllowedOAuthFlows:
         - code
       AllowedOAuthFlowsUserPoolClient: true
-      AllowedOAuthScopes: 
+      AllowedOAuthScopes:
         - openid
         - email
         - phone
         - profile
         - aws.cognito.signin.user.admin
-      CallbackURLs: 
+      CallbackURLs:
         - !Sub "https://${AppDomainName}/login"
       ClientName: FitnessApp
       DefaultRedirectURI: !Sub "https://${AppDomainName}/login"
@@ -847,10 +847,10 @@ Resources:
       ExplicitAuthFlows:
         - ALLOW_REFRESH_TOKEN_AUTH
         - ALLOW_USER_PASSWORD_AUTH
-      LogoutURLs: 
+      LogoutURLs:
         - !Sub "https://${AppDomainName}/login"
       PreventUserExistenceErrors: ENABLED
-      SupportedIdentityProviders: 
+      SupportedIdentityProviders:
         - COGNITO
       UserPoolId: !Ref FitnessAppCognitoUserPool
 
@@ -859,7 +859,7 @@ Resources:
     Properties:
       Bucket: !ImportValue S3BucketRoot
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Action:
               - s3:GetObject
@@ -883,79 +883,79 @@ Resources:
           ForwardedValues:
             QueryString: true
           MaxTTL: 31536000
-          TargetOriginId: !Sub 'S3-${AWS::StackName}-root'
-          ViewerProtocolPolicy: 'redirect-to-https'
+          TargetOriginId: !Sub "S3-${AWS::StackName}-root"
+          ViewerProtocolPolicy: "redirect-to-https"
           ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
         CustomErrorResponses:
           - ErrorCode: 404
             ErrorCachingMinTTL: 60
             ResponseCode: 404
-            ResponsePagePath: '/404.html'
+            ResponsePagePath: "/404.html"
           - ErrorCode: 403
             ErrorCachingMinTTL: 60
             ResponseCode: 403
-            ResponsePagePath: '/403.html'
+            ResponsePagePath: "/403.html"
         Enabled: true
-        HttpVersion: 'http2'
-        DefaultRootObject: 'index.html'
+        HttpVersion: "http2"
+        DefaultRootObject: "index.html"
         IPV6Enabled: true
-        Logging:
-          Bucket: !ImportValue S3BucketLogsDomainName
-          IncludeCookies: false
-          Prefix: 'cdn/'
+        # Logging:
+        #   Bucket: !ImportValue S3BucketLogsDomainName
+        #   IncludeCookies: false
+        #   Prefix: 'cdn/'
         Origins:
           - DomainName: !ImportValue S3BucketRootDomainName
-            Id: !Sub 'S3-${AWS::StackName}-root'
+            Id: !Sub "S3-${AWS::StackName}-root"
             S3OriginConfig:
               OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
-        PriceClass: 'PriceClass_All'
+        PriceClass: "PriceClass_All"
         ViewerCertificate:
           AcmCertificateArn: !Ref CDNCertificateArn
-          MinimumProtocolVersion: 'TLSv1.1_2016'
-          SslSupportMethod: 'sni-only'
+          MinimumProtocolVersion: "TLSv1.1_2016"
+          SslSupportMethod: "sni-only"
 
   CloudFrontOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub 'CloudFront OAI for ${CDNDomainName}'
+        Comment: !Sub "CloudFront OAI for ${CDNDomainName}"
 
   Route53RecordSetGroup:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneName: abugharbia.com.
       RecordSets:
-      - Name: !Ref CDNDomainName
-        Type: 'A'
-        AliasTarget:
-          DNSName: !GetAtt 'CloudFrontDistribution.DomainName'
-          EvaluateTargetHealth: false
-          # The  following HosteZoneId is always used for alias records pointing to CF.
-          HostedZoneId: 'Z2FDTNDATAQYW2'
+        - Name: !Ref CDNDomainName
+          Type: "A"
+          AliasTarget:
+            DNSName: !GetAtt "CloudFrontDistribution.DomainName"
+            EvaluateTargetHealth: false
+            # The  following HosteZoneId is always used for alias records pointing to CF.
+            HostedZoneId: "Z2FDTNDATAQYW2"
 
   ResponseHeadersPolicy:
-      Type: AWS::CloudFront::ResponseHeadersPolicy
-      Properties: 
-        ResponseHeadersPolicyConfig: 
-          Name: !Sub "${AWS::StackName}-static-site-security-headers"
-          SecurityHeadersConfig: 
-            StrictTransportSecurity: 
-              AccessControlMaxAgeSec: 63072000
-              IncludeSubdomains: true
-              Override: true
-              Preload: true
-            ContentSecurityPolicy: 
-              ContentSecurityPolicy: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'"
-              Override: true
-            ContentTypeOptions: 
-              Override: true
-            FrameOptions:
-              FrameOption: DENY
-              Override: true
-            ReferrerPolicy: 
-              ReferrerPolicy: "same-origin"
-              Override: true
-            XSSProtection: 
-              ModeBlock: true
-              Override: true
-              Protection: true
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub "${AWS::StackName}-static-site-security-headers"
+        SecurityHeadersConfig:
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 63072000
+            IncludeSubdomains: true
+            Override: true
+            Preload: true
+          ContentSecurityPolicy:
+            ContentSecurityPolicy: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'"
+            Override: true
+          ContentTypeOptions:
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+          ReferrerPolicy:
+            ReferrerPolicy: "same-origin"
+            Override: true
+          XSSProtection:
+            ModeBlock: true
+            Override: true
+            Protection: true
