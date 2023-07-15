@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Fitness App homepage
+      </title>
+      <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" type="text/css" />
+   </head>
+   <body>
+        <h2 style="text-align: center;">Hello {{ user }}, Welcome to your homepage!</h2>
+        <a href="/getweights"><button>Get weights</button></a>
+        <a href="/postweight"><button>Post weight</button></a>
+   </body>
+</html>
