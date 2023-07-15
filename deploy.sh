@@ -5,31 +5,31 @@ set -x
 
 
 [[ -n $STAGE ]] || {
-    perr "Env var STAGE has to be set."
+    echo "Env var STAGE has to be set." 1>&2
     exit -1
 }
 [[ -n $COGNITO_DOMAIN_NAME ]] || {
-    perr "Env var COGNITO_DOMAIN_NAME has to be set."
+    echo "Env var COGNITO_DOMAIN_NAME has to be set." 1>&2
     exit -1
 }
 [[ -n $APP_DOMAIN_NAME ]] || {
-    perr "Env var APP_DOMAIN_NAME has to be set."
+    echo "Env var APP_DOMAIN_NAME has to be set." 1>&2
     exit -1
 }
 [[ -n $CDN_DOMAIN_NAME ]] || {
-    perr "Env var CDN_DOMAIN_NAME has to be set."
+    echo "Env var CDN_DOMAIN_NAME has to be set." 1>&2
     exit -1
 }
 [[ -n $FLASK_SECRET_KEY ]] || {
-    perr "Env var FLASK_SECRET_KEY has to be set."
+    echo "Env var FLASK_SECRET_KEY has to be set." 1>&2
     exit -1
 }
 [[ -n $DOMAIN ]] || {
-    perr "Env var DOMAIN has to be set."
+    echo "Env var DOMAIN has to be set." 1>&2
     exit -1
 }
 [[ -n $HOSTED_ZONE_ID ]] || {
-    perr "Env var HOSTED_ZONE_ID has to be set."
+    echo "Env var HOSTED_ZONE_ID has to be set." 1>&2
     exit -1
 }
 
