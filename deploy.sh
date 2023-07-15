@@ -2,17 +2,36 @@
 
 WORKDIR=$PWD
 set -x
-STAGE=${STAGE:-"dev"}
-
-COGNITO_DOMAIN_NAME=${COGNITO_DOMAIN_NAME:-"login.fitnessapp"}
-APP_DOMAIN_NAME=${APP_DOMAIN_NAME:-"fitnessapp"}
-CDN_DOMAIN_NAME=${CDN_DOMAIN_NAME:-"static.fitnessapp"}
-
-FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-"Mystupidsecretdamnedkey"}
-DOMAIN=${DOMAIN:-"abugharbia.com"}
-HOSTED_ZONE_ID=${HOSTED_ZONE_ID:-"Z08504683I8N30STEKLQ0"}
 
 
+[[ -n $STAGE ]] || {
+    perr "Env var STAGE has to be set."
+    exit -1
+}
+[[ -n $COGNITO_DOMAIN_NAME ]] || {
+    perr "Env var COGNITO_DOMAIN_NAME has to be set."
+    exit -1
+}
+[[ -n $APP_DOMAIN_NAME ]] || {
+    perr "Env var APP_DOMAIN_NAME has to be set."
+    exit -1
+}
+[[ -n $CDN_DOMAIN_NAME ]] || {
+    perr "Env var CDN_DOMAIN_NAME has to be set."
+    exit -1
+}
+[[ -n $FLASK_SECRET_KEY ]] || {
+    perr "Env var FLASK_SECRET_KEY has to be set."
+    exit -1
+}
+[[ -n $DOMAIN ]] || {
+    perr "Env var DOMAIN has to be set."
+    exit -1
+}
+[[ -n $HOSTED_ZONE_ID ]] || {
+    perr "Env var HOSTED_ZONE_ID has to be set."
+    exit -1
+}
 
 if [[ $STAGE != "prod" ]]; then
     DOMAIN="-${STAGE}.${DOMAIN}"
@@ -33,7 +52,7 @@ TAGS="Environment=$STAGE"
     CAPABILITIES="CAPABILITY_IAM CAPABILITY_NAMED_IAM"
 
     aws cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE --capabilities $(echo $CAPABILITIES) --parameter-override $(echo $PARAMETERS) --tags $(echo $TAGS)
-    # $WORKDIR/push_sources.sh
+    $WORKDIR/push_sources.sh
 } && {
     STACK_NAME="Fitness-App-us-east-1-certificates-${STAGE}"
     TEMPLATE_FILE="${WORKDIR}/infra/us-east-1-certificates.yml"
