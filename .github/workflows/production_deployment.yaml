@@ -10,10 +10,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   
-env:
-  # Setting an environment variable with the value of a configuration variable
-  env_var: ${{ vars.ENV_CONTEXT_VAR }}
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -30,17 +26,19 @@ jobs:
         run: |
           env
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           APP_DOMAIN_NAME: ${{ vars.APP_DOMAIN_NAME }}
           CDN_DOMAIN_NAME: ${{ vars.CDN_DOMAIN_NAME }}
           COGNITO_DOMAIN_NAME: ${{ vars.COGNITO_DOMAIN_NAME }}
           DOMAIN: ${{ vars.DOMAIN }}
           STAGE: ${{ vars.STAGE }}
-      - name: Check dependencies
+          FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
+          
+      - name: Run the deployment script
         run: |
-          zip --version
-          jq --version
-          aws --version
           aws sts get-caller-identity
+          ./deploy.sh
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -49,3 +47,5 @@ jobs:
           COGNITO_DOMAIN_NAME: ${{ vars.COGNITO_DOMAIN_NAME }}
           DOMAIN: ${{ vars.DOMAIN }}
           STAGE: ${{ vars.STAGE }}
+          FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
+          HOSTED_ZONE_ID: ${{ secrets.HOSTED_ZONE_ID }}
