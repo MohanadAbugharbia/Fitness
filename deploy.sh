@@ -3,7 +3,7 @@
 WORKDIR=$PWD
 set -x
 
-
+echo $STAGE
 [[ -n $STAGE ]] || {
     echo "Env var STAGE has to be set." 1>&2
     exit -1
