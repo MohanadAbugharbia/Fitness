@@ -3,31 +3,31 @@
 WORKDIR=$PWD
 set -x
 
-[[ -n $STAGE ]] && {
+[[ -z $STAGE ]] && {
     echo "Env var STAGE has to be set." 1>&2
     exit -1
 }
-[[ -n $COGNITO_DOMAIN_NAME ]] && {
+[[ -z $COGNITO_DOMAIN_NAME ]] && {
     echo "Env var COGNITO_DOMAIN_NAME has to be set." 1>&2
     exit -1
 }
-[[ -n $APP_DOMAIN_NAME ]] && {
+[[ -z $APP_DOMAIN_NAME ]] && {
     echo "Env var APP_DOMAIN_NAME has to be set." 1>&2
     exit -1
 }
-[[ -n $CDN_DOMAIN_NAME ]] && {
+[[ -z $CDN_DOMAIN_NAME ]] && {
     echo "Env var CDN_DOMAIN_NAME has to be set." 1>&2
     exit -1
 }
-[[ -n $FLASK_SECRET_KEY ]] && {
+[[ -z $FLASK_SECRET_KEY ]] && {
     echo "Env var FLASK_SECRET_KEY has to be set." 1>&2
     exit -1
 }
-[[ -n $DOMAIN ]] && {
+[[ -z $DOMAIN ]] && {
     echo "Env var DOMAIN has to be set." 1>&2
     exit -1
 }
-[[ -n $HOSTED_ZONE_ID ]] && {
+[[ -z $HOSTED_ZONE_ID ]] && {
     echo "Env var HOSTED_ZONE_ID has to be set." 1>&2
     exit -1
 }
