@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deployment
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deployment:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment:
+      name: Prod
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Check all environmental variables
+        run: |
+          env
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          APP_DOMAIN_NAME: ${{ vars.APP_DOMAIN_NAME }}
+          CDN_DOMAIN_NAME: ${{ vars.CDN_DOMAIN_NAME }}
+          COGNITO_DOMAIN_NAME: ${{ vars.COGNITO_DOMAIN_NAME }}
+          DOMAIN: ${{ vars.DOMAIN }}
+          STAGE: ${{ vars.STAGE }}
+          FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
+          
+      - name: Run the deployment script
+        run: |
+          aws sts get-caller-identity
+          ./deploy.sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          APP_DOMAIN_NAME: ${{ vars.APP_DOMAIN_NAME }}
+          CDN_DOMAIN_NAME: ${{ vars.CDN_DOMAIN_NAME }}
+          COGNITO_DOMAIN_NAME: ${{ vars.COGNITO_DOMAIN_NAME }}
+          DOMAIN: ${{ vars.DOMAIN }}
+          STAGE: ${{ vars.STAGE }}
+          FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
+          HOSTED_ZONE_ID: ${{ secrets.HOSTED_ZONE_ID }}
+          AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
