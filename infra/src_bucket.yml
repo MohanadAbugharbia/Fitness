@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Source Code Bucket"
+Metadata: {}
+# Parameters:
+#   environment:
+#     Type: String
+#     Default: dev
+#     AllowedValues:
+#       - dev
+#       - prod
+#     Description: |
+#       Placeholder
+
+Conditions: {}
+Outputs:
+  S3SourceCodeBucket:
+    Description: Bucket containing zip files of source code
+    Value: !Ref S3SourceCodeBucket
+    Export:
+      Name: S3SourceCodeBucket
+  S3BucketLogsDomainName:
+    Description: Domain Name of logs bucket
+    Value: !GetAtt S3BucketLogs.DomainName
+    Export:
+      Name: S3BucketLogsDomainName
+  S3BucketRootDomainName:
+    Description: Domain Name of root bucket
+    Value: !GetAtt S3BucketRoot.DomainName
+    Export:
+      Name: S3BucketRootDomainName
+  S3BucketRoot:
+    Description: Domain Name of logs bucket
+    Value: !Ref S3BucketRoot
+    Export:
+      Name: S3BucketRoot
+  S3BucketRootArn:
+    Description: Domain Name of logs bucket
+    Value: !GetAtt S3BucketRoot.Arn
+    Export:
+      Name: S3BucketRootArn
+
+
+Resources:
+  S3SourceCodeBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: fitness-app-source-bucket
+      LoggingConfiguration: {}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: "AES256"
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: OnlyKeep5Versions
+            NoncurrentVersionExpiration:
+              NewerNoncurrentVersions: 5
+              NoncurrentDays: 1
+            # Prefix: /functions
+            Status: Enabled
+
+  S3BucketLogs:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: fitness-app-logs-bucket
+      # AccessControl: LogDeliveryWrite
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  S3BucketRoot:
+    Type: AWS::S3::Bucket
+    # DeletionPolicy: Delete
+    Properties:
+      BucketName: fitness-app-root-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref "S3BucketLogs"
+        LogFilePrefix: "origin/"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
