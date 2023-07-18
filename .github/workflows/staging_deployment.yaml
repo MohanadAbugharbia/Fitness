@@ -2,14 +2,14 @@ name: Deployment
 
 on:
   push:
-    branches: ["main"]
+    branches: ["staging"]
   workflow_dispatch:
 
 jobs:
   deployment:
     runs-on: ubuntu-latest
     environment:
-      name: Prod
+      name: Staging
     steps:
       - uses: actions/checkout@v3
       - name: Run the deployment script
