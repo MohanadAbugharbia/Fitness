@@ -1,15 +1,16 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Source Code Bucket"
 Metadata: {}
-# Parameters:
-#   environment:
-#     Type: String
-#     Default: dev
-#     AllowedValues:
-#       - dev
-#       - prod
-#     Description: |
-#       Placeholder
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+    Description: |
+      Placeholder
 
 Conditions: {}
 Outputs:
@@ -39,12 +40,12 @@ Outputs:
     Export:
       Name: S3BucketRootArn
 
-
 Resources:
   S3SourceCodeBucket:
+    DeletionPolicy: Retain
     Type: "AWS::S3::Bucket"
     Properties:
-      BucketName: fitness-app-source-bucket
+      BucketName: !Sub "fitness-app-source-bucket-${Environment}"
       LoggingConfiguration: {}
       BucketEncryption:
         ServerSideEncryptionConfiguration:
@@ -67,9 +68,10 @@ Resources:
             Status: Enabled
 
   S3BucketLogs:
+    DeletionPolicy: Retain
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: fitness-app-logs-bucket
+      BucketName: !Sub "fitness-app-logs-bucket-${Environment}"
       # AccessControl: LogDeliveryWrite
       BucketEncryption:
         ServerSideEncryptionConfiguration:
@@ -77,10 +79,10 @@ Resources:
               SSEAlgorithm: AES256
 
   S3BucketRoot:
+    DeletionPolicy: Retain
     Type: AWS::S3::Bucket
-    # DeletionPolicy: Delete
     Properties:
-      BucketName: fitness-app-root-bucket
+      BucketName: !Sub "fitness-app-root-bucket-${Environment}"
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
