@@ -36,6 +36,10 @@ Parameters:
     Type: String
     Description: |
       Placeholder
+  HostedZoneName:
+    Type: String
+    Description: |
+      Placeholder
 
 Conditions: {}
 # Outputs: {}
@@ -724,7 +728,7 @@ Resources:
   FitnessAppApiDNSRecord:
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneName: abugharbia.com.
+      HostedZoneName: !Sub "${HostedZoneName}."
       RecordSets:
         - Name: !Ref AppDomainName
           Type: "A"
@@ -817,7 +821,7 @@ Resources:
   FitnessAppCognitoDomainDNSRecord:
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneName: abugharbia.com.
+      HostedZoneName: !Sub "${HostedZoneName}."
       RecordSets:
         - Name: !Ref CognitoDomainName
           Type: "A"
@@ -923,7 +927,7 @@ Resources:
   Route53RecordSetGroup:
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneName: abugharbia.com.
+      HostedZoneName: !Sub "${HostedZoneName}."
       RecordSets:
         - Name: !Ref CDNDomainName
           Type: "A"
