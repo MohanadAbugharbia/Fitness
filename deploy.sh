@@ -31,7 +31,7 @@ set -x
     echo "Env var HOSTED_ZONE_ID has to be set." 1>&2
     exit -1
 }
-
+HOSTED_ZONE_NAME=$DOMAIN
 if [[ $STAGE != "prod" ]]; then
     DOMAIN="-${STAGE}.${DOMAIN}"
 else
@@ -42,7 +42,7 @@ COGNITO_DOMAIN_NAME="${COGNITO_DOMAIN_NAME}${DOMAIN}"
 APP_DOMAIN_NAME="${APP_DOMAIN_NAME}${DOMAIN}"
 CDN_DOMAIN_NAME="${CDN_DOMAIN_NAME}${DOMAIN}"
 
-PARAMETERS="Environment=$STAGE CognitoDomainName=$COGNITO_DOMAIN_NAME AppDomainName=$APP_DOMAIN_NAME CDNDomainName=$CDN_DOMAIN_NAME FlaskSecretKey=$FLASK_SECRET_KEY HostedZoneId=$HOSTED_ZONE_ID"
+PARAMETERS="Environment=$STAGE CognitoDomainName=$COGNITO_DOMAIN_NAME AppDomainName=$APP_DOMAIN_NAME CDNDomainName=$CDN_DOMAIN_NAME FlaskSecretKey=$FLASK_SECRET_KEY HostedZoneId=$HOSTED_ZONE_ID HostedZoneName=$HOSTED_ZONE_NAME"
 TAGS="Environment=$STAGE"
 
 {
