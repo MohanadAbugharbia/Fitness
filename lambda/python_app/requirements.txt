@@ -1,0 +1,11 @@
+aws_lambda_powertools>=2.5.0
+pydantic>=1.10.2
+Flask>=2.2.2
+Flask-WTF
+flask-sqlalchemy
+Flask-Login
+aws-wsgi>=0.2.7
+requests>=2.28.1
+urllib3<2
+psycopg2-binary
+python-dotenv

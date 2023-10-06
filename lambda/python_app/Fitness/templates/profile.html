@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block container %}
+
+<section class="full-width-section profile-section">
+  <div class="profile-information">
+    <table>
+      <thead>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+      </thead>
+      <tr>
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
+      </tr>
+    </table>
+  </div>
+</section>
+<section class="left-section weight-form-section">
+  <div class="weight-form-box">
+    <div class="weight-form-value">
+      <form
+        method="POST"
+        action="{{ url_for('profile.submit_weight') }}"
+        role="form"
+      >
+        <h2>Enter weight</h2>
+        <div class="inputbox">
+          <ion-icon name="calendar-outline"></ion-icon>
+          {{ weight_form.date() }} {{ weight_form.date.label }}
+        </div>
+        <div class="inputbox">
+          {{ weight_form.weight() }} {{ weight_form.weight.label }}
+        </div>
+        {% for category, message in get_flashed_messages(with_categories=true,
+        category_filter=['weight_entry_error']) %}
+        <div class="alert alert-{{category}} alert-dismissable">
+          <button
+            type="buton"
+            class="close button"
+            onclick="delete_flash(this)"
+          >
+            &times;
+          </button>
+          <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+        <button class="form-submit-button">Save</button>
+      </form>
+    </div>
+  </div>
+</section>
+<section class="right-section weights-section">
+  <div class="weights-information">
+    <table>
+      <thead>
+        <th>Date</th>
+        <th>Weight</th>
+      </thead>
+      {% for weight in weights %}
+      <tr>
+        <td>{{ weight.date.strftime("%d.%m.%Y") }}</td>
+        <td>{{ weight.weight }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+{% endblock %}

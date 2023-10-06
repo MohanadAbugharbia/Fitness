@@ -4,3 +4,4 @@ Pipfile.lock
 *.zip
 dependencies
 .DS_Store
+.venv
