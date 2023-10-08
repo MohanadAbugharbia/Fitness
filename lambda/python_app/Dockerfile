@@ -27,4 +27,4 @@ COPY ./tools $VIRTUAL_ENV/lib/python3.10/site-packages/tools
 
 
 
-CMD [ "python", "/opt/fitness/run.py" ]
+CMD [ "python", "/opt/fitness/run.py", "--host 0.0.0.0", "--port 8080" ]

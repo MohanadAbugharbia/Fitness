@@ -14,8 +14,8 @@ arg_parser = ArgumentParser("Fitness Application")
 
 arg_parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 arg_parser.add_argument("-c", "--config", help="TOML formated configuration.")
-arg_parser.add_argument("-H", "--host", help="Host to run the web server on")
-arg_parser.add_argument("-p", "--port", help="Port to run the web server on")
+arg_parser.add_argument("-H", "--host", default="0.0.0.0", help="Host to run the web server on")
+arg_parser.add_argument("-p", "--port", default=8080, type=int, help="Port to run the web server on")
 arg_parser.add_argument("-l", "--log", help="Log file")
 arg_parser.add_argument("-v", "--verbose", help="Verbose mode", action="store_true")
 
@@ -62,12 +62,14 @@ DB_ENGINE = os.environ.get('DB_ENGINE')
 # db_conf = parse_database_args(args)
 
 logger.info("Importing Fitness Module")
-from Fitness import app
+
+from waitress import serve
 
 while True:
     try:
+        from Fitness import app
         logger.info("Starting Fitness application")
-        app.run(debug=args.debug)
+        serve(app, host=args.host, port=args.port)
     except Exception as e:
         logger.error(e, exc_info=True)
     logger.info("Restarting the Server")
