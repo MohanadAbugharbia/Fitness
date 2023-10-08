@@ -1,6 +1,5 @@
 ARG ARCH
-ARG DOCKER_PYTHON_VERSION=3.11
-FROM ${ARCH}python:${DOCKER_PYTHON_VERSION}
+FROM ${ARCH}python:3.11
 
 SHELL [ "/bin/bash", "-c" ]
 
@@ -22,8 +21,8 @@ RUN python -m venv $VIRTUAL_ENV && pip install -r /tmp/requirements.txt
 
 
 ADD ./run.py /opt/fitness/run.py
-COPY ./Fitness $VIRTUAL_ENV/lib/python${DOCKER_PYTHON_VERSION}/site-packages/Fitness
-COPY ./tools $VIRTUAL_ENV/lib/python${DOCKER_PYTHON_VERSION}/site-packages/tools
+COPY ./Fitness $VIRTUAL_ENV/lib/python3.11/site-packages/Fitness
+COPY ./tools $VIRTUAL_ENV/lib/python3.11/site-packages/tools
 
 
 
