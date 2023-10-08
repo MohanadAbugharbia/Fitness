@@ -22,6 +22,7 @@ RUN python -m venv $VIRTUAL_ENV && pip install -r /tmp/requirements.txt
 
 ADD ./run.py /opt/fitness/run.py
 COPY ./Fitness $VIRTUAL_ENV/lib/python3.10/site-packages/Fitness
+COPY ./tools $VIRTUAL_ENV/lib/python3.10/site-packages/tools
 
 
 

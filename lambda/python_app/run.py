@@ -2,9 +2,11 @@ from logging import Logger, getLogger
 import logging
 from time import sleep
 from argparse import ArgumentParser
-
+import os
+import sys
 from tools import (
-    parse_database_args
+    parse_database_args,
+    validate_database_arguments
 )
 
 
@@ -48,8 +50,16 @@ if args.debug:
 logging_handler.setFormatter(formatter)
 logger.addHandler(logging_handler)
 
+validate_database_arguments(args)
 
-db_conf = parse_database_args(args)
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = os.environ.get('DB_HOST')
+DB_PORT = os.environ.get('DB_PORT')
+DB_NAME = os.environ.get('DB_NAME')
+DB_ENGINE = os.environ.get('DB_ENGINE')
+
+# db_conf = parse_database_args(args)
 
 logger.info("Importing Fitness Module")
 from Fitness import app

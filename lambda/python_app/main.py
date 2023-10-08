@@ -149,7 +149,7 @@ logger: Logger = Logger(service="FitnessApp")
 
 
 
-@logger.inject_lambda_context()
+@logger.inject_lambda_context(log_event=True)
 def handler(event: dict, context: LambdaContext) -> dict:
     logger.set_correlation_id(context.aws_request_id)
     app.secret_key = FLASK_SECRET_KEY
