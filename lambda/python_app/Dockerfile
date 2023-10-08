@@ -1,9 +1,10 @@
 ARG ARCH
-FROM ${ARCH}python:3.11
+ARG PYTHON_VERSION=3.11
+FROM ${ARCH}python:${PYTHON_VERSION}
 
 SHELL [ "/bin/bash", "-c" ]
 
-EXPOSE 5000
+EXPOSE 8080
 
 ENV VIRTUAL_ENV=/opt/fitness/venv
 ENV PATH=$VIRTUAL_ENV/bin:$PATH
@@ -21,10 +22,10 @@ RUN python -m venv $VIRTUAL_ENV && pip install -r /tmp/requirements.txt
 
 
 ADD ./run.py /opt/fitness/run.py
-COPY ./Fitness $VIRTUAL_ENV/lib/python3.11/site-packages/Fitness
-COPY ./tools $VIRTUAL_ENV/lib/python3.11/site-packages/tools
+COPY ./Fitness $VIRTUAL_ENV/lib/python${PYTHON_VERSION}/site-packages/Fitness
+COPY ./tools $VIRTUAL_ENV/lib/python${PYTHON_VERSION}/site-packages/tools
 
 
 
 
-CMD [ "python", "/opt/fitness/run.py", "-H '0.0.0.0'", "-p '8080'" ]
+CMD [ "python", "/opt/fitness/run.py" ]
