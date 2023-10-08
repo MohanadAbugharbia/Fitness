@@ -15,12 +15,14 @@ DB_PORT = os.environ['DB_PORT']
 DB_NAME = os.environ['DB_NAME']
 DB_ENGINE = os.environ['DB_ENGINE']
 
+SECRET_KEY = os.environ['SECRET_KEY']
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = f'{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-app.config['WTF_CSRF_SECRET_KEY'] = 'random key for form'
 
 db: SQLAlchemy = SQLAlchemy(app)
 
-app.secret_key = 'randon_key'
+app.secret_key = SECRET_KEY
 
 login_manager = LoginManager()
 login_manager.init_app(app)
