@@ -1,5 +1,5 @@
 ARG ARCH
-FROM ${ARCH}python:3.10
+FROM ${ARCH}python:3.11
 
 SHELL [ "/bin/bash", "-c" ]
 
@@ -27,4 +27,4 @@ COPY ./tools $VIRTUAL_ENV/lib/python3.10/site-packages/tools
 
 
 
-CMD [ "python", "/opt/fitness/run.py", "-H 0.0.0.0", "-p 8080" ]
+CMD [ "python", "/opt/fitness/run.py", "-H '0.0.0.0'", "-p '8080'" ]
