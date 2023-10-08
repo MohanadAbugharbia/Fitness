@@ -27,4 +27,4 @@ COPY ./tools $VIRTUAL_ENV/lib/python3.10/site-packages/tools
 
 
 
-ENTRYPOINT [ "python", "/opt/fitness/run.py" ]
+CMD [ "python", "/opt/fitness/run.py" ]
