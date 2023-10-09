@@ -11,3 +11,4 @@ psycopg2-binary
 python-dotenv
 werkzeug<2.3
 waitress
+paste
