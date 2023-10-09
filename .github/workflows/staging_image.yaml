@@ -1,0 +1,46 @@
+name: Staging Docker Image CI
+
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Docker Setup Buildx
+      uses: docker/setup-buildx-action@v3
+      with:
+        install: true
+        platforms: linux/amd64,linux/arm64/v8
+        cleanup: true
+        use: true
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        registry: registry.abugharbia.com
+        username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+    - name: Build the Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: lambda/python_app
+        platforms: linux/amd64,linux/arm64/v8
+        provenance: false
+        push: true
+        tags: |
+          registry.abugharbia.com/fitness:staging-latest
+          registry.abugharbia.com/fitness:staging-$(date +%s)
+          registry.abugharbia.com/fitness:staging-${{ GITHUB_SHA }}
+          registry.abugharbia.com/fitness:staging-${{ GITHUB_JOB }}
