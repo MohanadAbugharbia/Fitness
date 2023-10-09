@@ -3,7 +3,7 @@ import sys
 import logging
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("Fitness")
 
 def validate_env_vars(args: dict) -> None:
     """
