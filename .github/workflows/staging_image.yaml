@@ -41,6 +41,5 @@ jobs:
         push: true
         tags: |
           registry.abugharbia.com/fitness:staging-latest
-          registry.abugharbia.com/fitness:staging-$(date +%s)
           registry.abugharbia.com/fitness:staging-${{ github.sha }}
           registry.abugharbia.com/fitness:staging-${{ github.job }}
