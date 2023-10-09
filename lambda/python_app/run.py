@@ -21,7 +21,7 @@ db_args.add_argument("--db_pass", help="Database password")
 db_args.add_argument("--db_host", help="Database host")
 db_args.add_argument("--db_port", help="Database port")
 db_args.add_argument("--db_name", help="Database name")
-db_args.add_argument("--db_engine", help="Database engine")
+db_args.add_argument("--db_engine", help="Database engine", choices=["postgressql"])
 
 ## Secret key argument
 app_args = arg_parser.add_argument_group("Application arguments")
