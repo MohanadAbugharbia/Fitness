@@ -3,7 +3,9 @@ import logging
 from paste.translogger import TransLogger
 from argparse import ArgumentParser
 from tools import (
-    validate_env_vars
+    validate_env_vars,
+    parse_database_config,
+    parse_application_config,
 )
 
 
@@ -56,6 +58,8 @@ if args.debug:
 logger.addHandler(logging_handler)
 
 validate_env_vars(args)
+db_conf = parse_database_config(args)
+app_conf = parse_application_config(args)
 
 
 logger.info("Importing Fitness Module")
@@ -63,8 +67,9 @@ logger.info("Importing Fitness Module")
 from waitress import serve
 
 try:
-    from Fitness import app
+    from Fitness import create_app
     logger.info("Starting Fitness application")
+    app = create_app(db_conf, app_conf)
     serve(TransLogger(app, logger=logger, setup_console_handler=False), host=args.host, port=args.port)
 except Exception as e:
     logger.error(e, exc_info=True)

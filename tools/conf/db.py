@@ -15,7 +15,7 @@ class DatabaseConfig(BaseModel):
     def __str__(self) -> str:
         return self.__repr__()
 
-def parse_database_args(args) -> DatabaseConfig:
+def parse_database_config(args) -> DatabaseConfig:
     """
         Parses the database arguments and returns a DatabaseConfig object.
     """

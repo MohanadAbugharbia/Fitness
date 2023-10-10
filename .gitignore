@@ -5,3 +5,5 @@ Pipfile.lock
 dependencies
 .DS_Store
 .venv
+.pytest*
+.coverage
