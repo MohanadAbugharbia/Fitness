@@ -26,8 +26,6 @@ def home():
 
 
 def create_app(database_config: DatabaseConfig, application_config: ApplicationConfig):
-    app = Flask(__name__)
-
     app.config['SQLALCHEMY_DATABASE_URI'] = f'{database_config.engine}://{database_config.user}:{database_config.password}@{database_config.host}:{database_config.port}/{database_config.database}'
 
     app.secret_key = application_config.secret_key

@@ -3,7 +3,7 @@ import logging
 from paste.translogger import TransLogger
 from argparse import ArgumentParser
 from tools import (
-    validate_env_vars,
+    evaluate_env_vars,
     parse_database_config,
     parse_application_config,
 )
@@ -57,7 +57,7 @@ if args.debug:
 
 logger.addHandler(logging_handler)
 
-validate_env_vars(args)
+args = evaluate_env_vars(args)
 db_conf = parse_database_config(args)
 app_conf = parse_application_config(args)
 
