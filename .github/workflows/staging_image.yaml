@@ -36,7 +36,13 @@ jobs:
         pip install -r requirements-dev.txt
 
     - name: Run tests
-      run: python -m pytest -v --cov=Fitness
+      run: python -m pytest -v --cov=Fitness --junitxml=pytest.xml --cov-report=xml:coverage.xml
+
+    - name: Pytest coverage comment
+      uses: MishaKav/pytest-coverage-comment@main
+      with:
+        pytest-xml-coverage-path: ./coverage.xml
+        junitxml-path: ./pytest.xml
 
     - name: Tear down test database
       run: psql -h localhost -U postgres -d postgres -c "DROP DATABASE IF EXISTS testdb WITH (FORCE);"
