@@ -1,14 +1,18 @@
 from pydantic import BaseModel
-import logging
+from typing import (
+    Optional,
+    Union,
+    Literal,
+)
 
 
 class DatabaseConfig(BaseModel):
     user: str
     password: str
-    host: str
-    port: int
+    host: Optional[Literal["localhost"]] = "localhost"
+    port: Optional[Literal[5432]] = 5432
     database: str
-    engine: str
+    engine: Optional[Literal["postgresql"]] = "postgresql"
 
     def __repr__(self) -> str:
         return f"DatabaseConfig(user={self.user}, host={self.host}, port={self.port}, database={self.database}, engine={self.engine})"

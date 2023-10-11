@@ -6,4 +6,4 @@ dependencies
 .DS_Store
 .venv
 .pytest*
-.coverage
+.coverage*

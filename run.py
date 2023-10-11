@@ -32,12 +32,7 @@ app_args.add_argument("-p", "--port", default=8080, type=int, help="Port to run 
 app_args.add_argument("--secret_key", help="Secret key")
 
 args = arg_parser.parse_args()
-
-
-
-
-logger = logging.getLogger('waitress')
-logger.setLevel(logging.DEBUG)
+args = evaluate_env_vars(args)
 
 
 ## Setup logging based on the parsed arguments
@@ -57,7 +52,6 @@ if args.debug:
 
 logger.addHandler(logging_handler)
 
-args = evaluate_env_vars(args)
 db_conf = parse_database_config(args)
 app_conf = parse_application_config(args)
 

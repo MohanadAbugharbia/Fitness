@@ -7,6 +7,41 @@ on:
     branches: [ "staging" ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: testpassword
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+
+    - name: Run tests
+      run: python -m pytest -v --cov=Fitness
+
+    - name: Tear down test database
+      run: psql -h localhost -U testuser -d testdb -c "DROP DATABASE testdb;"
+      env:
+        POSTGRES_DB: postgres
+        POSTGRES_USER: testuser
+        POSTGRES_PASSWORD: testpassword
 
   build:
 
