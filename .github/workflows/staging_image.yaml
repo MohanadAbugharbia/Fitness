@@ -39,11 +39,9 @@ jobs:
       run: python -m pytest -v --cov=Fitness
 
     - name: Tear down test database
-      run: psql -h localhost -U testuser -d testdb -c "DROP DATABASE testdb;"
+      run: psql -h localhost -U postgres -d postgres -c "DROP DATABASE IF EXISTS testdb WITH (FORCE);"
       env:
-        POSTGRES_DB: postgres
-        POSTGRES_USER: testuser
-        POSTGRES_PASSWORD: testpassword
+        PGPASSWORD: testpassword
 
   build:
     needs: test
