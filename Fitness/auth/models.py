@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
     firstname = sa.Column(sa.String(100), nullable=False)
     lastname = sa.Column(sa.String(100), nullable=False)
     password_hash = sa.Column(sa.String(256), nullable=False)
+    last_login = sa.Column(sa.DateTime, nullable=True)
     
     @property
     def password(self):

@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import (
     request,
     render_template,
@@ -53,6 +54,9 @@ def login_post():
         flash('Please check your login details and try again', 'error')
         return redirect(url_for('auth.login'))
     login_user(user, remember=remember)
+    user.last_login = datetime.today()
+    db.session.add(user)
+    db.session.commit()
     flash("Successfully logged in", "info")
     return redirect(url_for('home'))
 
