@@ -2,6 +2,7 @@ from flask_wtf import Form
 from wtforms import StringField,PasswordField, BooleanField
 from wtforms import validators
 from flask_login import UserMixin
+import sqlalchemy as sa
 from werkzeug.security import (
     generate_password_hash,
     check_password_hash
@@ -14,11 +15,11 @@ from Fitness import db, app
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     
-    id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    firstname = db.Column(db.String(100), nullable=False)
-    lastname = db.Column(db.String(100), nullable=False)
-    password_hash = db.Column(db.String(256), nullable=False)
+    id = sa.Column(sa.Integer, primary_key = True)
+    email = sa.Column(sa.String(100), unique=True, nullable=False)
+    firstname = sa.Column(sa.String(100), nullable=False)
+    lastname = sa.Column(sa.String(100), nullable=False)
+    password_hash = sa.Column(sa.String(256), nullable=False)
     
     @property
     def password(self):

@@ -1,18 +1,18 @@
+from datetime import datetime
 from flask_wtf import Form
 from wtforms import DateField, FloatField
 from wtforms import validators
-from flask_login import UserMixin
+import sqlalchemy as sa
 
 from Fitness import db, app
-from datetime import datetime
 
 
 class Weight(db.Model):
     __tablename__ = "weights"
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    date = db.Column(db.DateTime, nullable=False, primary_key=True)
-    weight = db.Column(db.Float, nullable=False)
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('users.id'), primary_key=True)
+    date = sa.Column(sa.DateTime, nullable=False, primary_key=True)
+    weight = sa.Column(sa.Float, nullable=False)
 
 class WeightForm(Form):
     date = DateField("Date", [validators.DataRequired()], default=datetime.today)
