@@ -9,8 +9,8 @@ from typing import (
 class DatabaseConfig(BaseModel):
     user: str
     password: str
-    host: Optional[Literal["localhost"]] = "localhost"
-    port: Optional[Literal[5432]] = 5432
+    host: Optional[str] = "localhost"
+    port: Optional[int] = 5432
     database: str
     engine: Optional[Literal["postgresql"]] = "postgresql"
 
