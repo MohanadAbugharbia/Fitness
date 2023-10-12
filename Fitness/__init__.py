@@ -42,4 +42,6 @@ def create_app(database_config: DatabaseConfig, application_config: ApplicationC
     ctx = app.test_request_context()
     ctx.push()
 
+    db.create_all()
+
     return app
