@@ -5,12 +5,12 @@ from wtforms import validators
 import sqlalchemy as sa
 
 from Fitness import db, app
-
+from Fitness.auth.models import User
 
 class Weight(db.Model):
     __tablename__ = "weights"
 
-    user_id = sa.Column(sa.Integer, sa.ForeignKey('users.id'), primary_key=True)
+    user_id = sa.Column(sa.Integer, sa.ForeignKey(User.id), primary_key=True)
     date = sa.Column(sa.DateTime, nullable=False, primary_key=True)
     weight = sa.Column(sa.Float, nullable=False)
 
