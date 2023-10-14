@@ -74,8 +74,8 @@ def test_update_password(db_session):
 
 def test_same_email_user(db_session):
     email="testsameemailuser@example.com"
-    firstname="update"
-    lastname="password"
+    firstname="sameemail"
+    lastname="user"
     password = "XXXXXXXXXXXX"
 
     user = User(
