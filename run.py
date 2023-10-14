@@ -2,6 +2,7 @@ from logging import Logger, getLogger
 import logging
 from paste.translogger import TransLogger
 from argparse import ArgumentParser
+import sys
 from tools import (
     evaluate_env_vars,
     parse_database_config,
@@ -67,3 +68,4 @@ try:
     serve(TransLogger(app, logger=logger, setup_console_handler=False), host=args.host, port=args.port)
 except Exception as e:
     logger.error(e, exc_info=True)
+    sys.exit(-1)
