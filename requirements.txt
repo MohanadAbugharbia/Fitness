@@ -8,3 +8,4 @@ python-dotenv
 werkzeug<2.3
 waitress
 paste
+email_validator

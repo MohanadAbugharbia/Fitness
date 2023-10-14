@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField,PasswordField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, EmailField
 from wtforms import validators
 from flask_login import UserMixin
 import sqlalchemy as sa
@@ -38,13 +38,31 @@ class User(UserMixin, db.Model):
         return f"User: {self.id},{self.email}"
 
 class LoginForm(Form):
-    email = StringField('Email',[validators.DataRequired()])
-    password = PasswordField('Password',[validators.DataRequired()])
+    email = EmailField('Email',[
+        validators.DataRequired(),
+        validators.InputRequired(),
+        validators.Email(message="Invalid Email"),
+    ])
+    password = PasswordField('Password',[
+        validators.DataRequired(),
+        validators.InputRequired(),
+        validators.Length(min=8, message="Password must be at least 8 characters"),
+        validators.Length(max=64, message="Password must be less than 64 characters"),
+    ])
     remember_me = BooleanField('Remember Me')
 
 
 class SignupForm(Form):
     firstname = StringField('First Name', [validators.DataRequired()])
     lastname = StringField('Last Name', [validators.DataRequired()])
-    email = StringField('Email', [validators.DataRequired()])
-    password = PasswordField('Password', [validators.DataRequired()])
+    email = EmailField('Email',[
+        validators.DataRequired(),
+        validators.InputRequired(),
+        validators.Email(message="Invalid Email"),
+    ])
+    password = PasswordField('Password',[
+        validators.DataRequired(),
+        validators.InputRequired(),
+        validators.Length(min=8, message="Password must be at least 8 characters"),
+        validators.Length(max=64, message="Password must be less than 64 characters"),
+    ])
