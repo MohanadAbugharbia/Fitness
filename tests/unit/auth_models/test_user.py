@@ -68,7 +68,7 @@ def test_update_password(db_session):
     db_session.add(user)
     db_session.commit()
 
-    new_user = User.query.filter(email == email).first()
+    new_user = User.query.filter_by(email = email).first()
     assert new_user.verify_password(new_password) is True
     assert new_user.verify_password(old_password) is False
 
