@@ -7,6 +7,7 @@ from flask import (
     url_for,
     Blueprint,
     g,
+    Response
 )
 from flask_login import (
     current_user,
@@ -44,7 +45,6 @@ def login():
 
 @auth.route('/login', methods=['POST'])
 def login_post():
-    print(request.args)
     email = request.form.get('email')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
@@ -79,9 +79,11 @@ def signup():
 @auth.route("/signup", methods=["POST"])
 def signup_post():
     form = SignupForm(request.form)
-    if form.errors:
+    if not form.validate():
         flash(form.errors, 'error')
-        return redirect(url_for("auth.signup"))
+        response = Response(", ".join(value[0] for _, value in form.errors.items()), status=400)
+        return response
+
     email = request.form.get('email')
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
