@@ -53,15 +53,21 @@ class LoginForm(Form):
 
 
 class SignupForm(Form):
-    firstname = StringField('First Name', [validators.DataRequired()])
-    lastname = StringField('Last Name', [validators.DataRequired()])
+    firstname = StringField('First Name', [
+        validators.DataRequired("First Name is required."),
+        validators.InputRequired(),
+    ])
+    lastname = StringField('Last Name', [
+        validators.DataRequired("Last Name is required."),
+        validators.InputRequired(),
+    ])
     email = EmailField('Email',[
-        validators.DataRequired(),
+        validators.DataRequired("Email is required."),
         validators.InputRequired(),
         validators.Email(message="Invalid Email"),
     ])
     password = PasswordField('Password',[
-        validators.DataRequired(),
+        validators.DataRequired("Password is required."),
         validators.InputRequired(),
         validators.Length(min=8, message="Password must be at least 8 characters"),
         validators.Length(max=64, message="Password must be less than 64 characters"),
