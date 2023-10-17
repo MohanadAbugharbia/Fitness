@@ -51,7 +51,7 @@ def test_user(db_session):
     
     return user
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def test_client(app):
     # Create a test client using the Flask application configured for testing
     with app.test_client() as testing_client:
